@@ -29,14 +29,14 @@ require_once('bitly-class.php');
 
 if(isset($_POST['longurl']) && $_POST['longurl'] != "")
 {
-    $bitly = new bitly('2c4dcac7f6516c3d63bf2af3b88b4731c2e22178');
+    $bitly = new bitly('{{OAuth access_token}}');
 
     // Shorten URL
     echo "Short URL is: " . $short_url = $bitly->shorten($_POST['longurl']);
 }
 if(isset($_POST['shorturl']) && $_POST['shorturl'] != "")
 {
-    $bitly = new bitly('2c4dcac7f6516c3d63bf2af3b88b4731c2e22178');
+    $bitly = new bitly('{{OAuth access_token}}');
 
     // Shorten URL
     echo "Long URL is: " . $long_url = $bitly->expand($_POST['shorturl']);
