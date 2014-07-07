@@ -21,7 +21,16 @@ class bitly{
     private $token;
     
     
-
+    
+    
+    function __construct($token = null) {
+    
+        if ( $token != null ) {
+            
+            $this->token = $token;
+        
+        }
+    }
     
     public function curl($APIurl) {
         
