@@ -15,90 +15,60 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-class bitly
-{
-
-private $target;
-private $token;
-
-
-
-
-function __construct($token = null) {
-
-if ( $token != null ) {
-$this->token = $token;
-
-}
-}
-
-public function curl($APIurl) {
+class bitly{
     
-    $ch = curl_init();
-    $timeout = 5;
-    curl_setopt($ch,CURLOPT_URL,$APIurl);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-    curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-    curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
-    curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return $data;
-}
-public function shorten($url ,$format='txt') {
+    private $target;
+    private $token;
     
-# Set Google Shortener API target
-$this->target = 'https://api-ssl.bitly.com/v3/shorten?';
     
 
-# Set API key if available
-
-$this->target .= 'access_token='.$this->token;
-
-
-$this->target .= '&longUrl=' . urlencode($url);
-
-$this->target .= '&format=' . $format;
-
-$short_url = $this->curl($this->target);
-
-if ( $format == 'json') {
     
-    return json_decode($short_url);
-} 
-elseif($format == 'txt') {
+    public function curl($APIurl) {
+        
+        $ch = curl_init();
+        $timeout = 5;
+        curl_setopt($ch,CURLOPT_URL,$APIurl);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
+    public function shorten($url ,$format='txt') {
+        
+        # Set Google Shortener API target
+        $this->target = 'https://api-ssl.bitly.com/v3/shorten?';
+        # Set API key if available 
+        $this->target .= 'access_token='.$this->token;
+        $this->target .= '&longUrl=' . urlencode($url);
+        $this->target .= '&format=' . $format;
+        $short_url = $this->curl($this->target); 
+        if ( $format == 'json') {
+            return json_decode($short_url);
+        } 
+        elseif($format == 'txt') {
+            return $short_url;
+        }
+    }
     
-    return $short_url;
-}
-}
-
-public function expand($url ,$format='txt') {
-    
-# Set Google Shortener API target
-$this->target = 'https://api-ssl.bitly.com/v3/expand?';
-    
-
-# Set API key if available
-
-$this->target .= 'access_token='.$this->token;
-
-
-$this->target .= '&shortUrl=' . urlencode($url);
-
-$this->target .= '&format=' . $format;
-
-$short_url = $this->curl($this->target);
-
-if ( $format == 'json') {
-    
-    return json_decode($short_url);
-} 
-elseif($format == 'txt') {
-    
-    return $short_url;
-}
-}
-
+    public function expand($url ,$format='txt') {
+        
+        # Set Google Shortener API target
+        $this->target = 'https://api-ssl.bitly.com/v3/expand?';
+        # Set API key if available
+        $this->target .= 'access_token='.$this->token;
+        $this->target .= '&shortUrl=' . urlencode($url);
+        $this->target .= '&format=' . $format;
+        $short_url = $this->curl($this->target);
+        if ( $format == 'json') {
+            return json_decode($short_url);
+        } 
+        elseif($format == 'txt') {
+            return $short_url;
+        }
+    }
 
 }
 
